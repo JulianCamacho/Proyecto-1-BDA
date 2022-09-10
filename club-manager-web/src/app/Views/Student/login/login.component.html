@@ -1,7 +1,7 @@
-<div class="container carta">
+<div class="container cart">
     <div class="row align-items-center justify-content-center">
         <div class="col">
-            <h2>Herbavi</h2>
+            <h2>Club Manager</h2>
         </div>
     </div>
     <div class="row formulario">
@@ -12,12 +12,24 @@
             <div class="form-group">
                 <input type="password" placeholder="Contraseña" class="form-control">
             </div>
-            <div class="contenedor-boton">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-2">
+                        <input class="form-check-input" type="checkbox" style="margin-left: 30px;">
+                    </div>
+                    <div class="col-10">
+                        <label class="form-check-label">
+                            Soy parte del personal administrativo
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
                 <button [disabled]="loginForm.form.invalid" type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </div>
         </form>
     </div>
-    <div class="row enlace">
+    <div class="row link">
         <p><a>¿No tienes una cuenta aún?</a></p>
     </div>
 </div>
