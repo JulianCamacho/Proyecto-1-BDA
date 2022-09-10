@@ -1,0 +1,41 @@
+/* CSS Web Landscape ******************************************************* */
+.carta{
+    width: 30%;
+    margin-top: 10%;
+    background-color: #DFE2CF;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;}
+
+.carta h2 {
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Cooperplate', Fantasy;
+    margin-bottom: 40px;
+}
+
+.carta input {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.carta .contenedor-boton {
+    text-align: center;
+}
+
+.carta .contenedor-boton button {
+    width: 60%;
+    margin-top: 10px;
+    background-color: #764248;
+    border-radius: 25px;
+}
+
+.carta .enlace {
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    color: blue;
+}
