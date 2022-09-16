@@ -6,33 +6,52 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
-const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth')
+const { crearUsuario, loginUsuario, crearAdmin, loginAdmin } = require('../controllers/auth')
 
 router.post(
-    '/new', 
+    '/newUser', 
     [ //Middlewares
         check('name', 'El nombre es obligatorio').not().isEmpty(),
-        check('email', 'El email es obligatorio').isEmail(),
-        check('password', 'El password debe de ser de 6 caracteres').isLength( { min:6 } ),
+        check('username', 'El username es obligatorio').not().isEmpty(),
+        check('password', 'El password debe de ser de 6 caracteres').isLength( { min:4 } ),
         validarCampos
     ], 
     crearUsuario
 );
 
 router.post(
-    '/', 
+    '/user', 
     [
-        check('email', 'El email es obligatorio').isEmail(),
-        check('password', 'El password debe de ser de 6 caracteres').isLength( { min:6 } ),
+        check('username', 'El username es obligatorio').not().isEmpty(),
+        check('password', 'El password debe de ser de 6 caracteres').isLength( { min:4 } ),
         validarCampos
     ],
     loginUsuario 
 );
 
-router.get('/renew', validarJWT, revalidarToken);
+router.post(
+    '/newAdmin', 
+    [ //Middlewares
+        check('name', 'El nombre es obligatorio').not().isEmpty(),
+        check('username', 'El username es obligatorio').not().isEmpty(),
+        check('password', 'El password debe de ser de 6 caracteres').isLength( { min:4 } ),
+        validarCampos
+    ], 
+    crearAdmin
+);
+
+router.post(
+    '/admin', 
+    [
+        check('username', 'El username es obligatorio').not().isEmpty(),
+        check('password', 'El password debe de ser de 6 caracteres').isLength( { min:4 } ),
+        validarCampos
+    ],
+    loginAdmin 
+);
+
 
 module.exports = router;

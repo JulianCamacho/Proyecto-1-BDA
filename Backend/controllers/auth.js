@@ -1,19 +1,19 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
-const { generarJWT } = require('../helpers/jwt');
+const Admin = require('../models/Admin');
 
 const crearUsuario = async (req, res = response) => {
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
-        let usuario = await Usuario.findOne({ email });
+        let usuario = await Usuario.findOne({ username });
 
         if (usuario) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Ya existe un usuario con ese correo'
+                msg: 'Ya existe un usuario con ese username'
             })
         }
 
@@ -25,20 +25,16 @@ const crearUsuario = async (req, res = response) => {
 
         await usuario.save();
 
-        // Generar JWT
-        const token = await generarJWT(usuario.id, usuario.name);
-
         res.status(201).json({
             ok: true,
             uid: usuario.id,
-            name: usuario.name,
-            token
+            name: usuario.name
         });
 
     } catch (error) {
         res.status(500).json({
             ok: false,
-            msg: 'Por favor comunicarse con el administrador'
+            msg: 'Ha ocurrido un error, favor comunicarse con el programador'
         })
     }
 
@@ -46,16 +42,16 @@ const crearUsuario = async (req, res = response) => {
 
 const loginUsuario = async(req, res = response) => {
 
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
 
-		const usuario = await Usuario.findOne({ email });
+		const usuario = await Usuario.findOne({ username });
 
-        if (!usuario) {
+        if (!usuario) { 
             return res.status(400).json({
                 ok: false,
-                msg: 'El usuario no existe con ese email'
+                msg: 'El usuario no existe con ese username'
             });
         }
 
@@ -69,14 +65,10 @@ const loginUsuario = async(req, res = response) => {
 			})
 		}
 
-		// Generar JWT
-        const token = await generarJWT(usuario.id, usuario.name);
-
 		res.json({
 			ok: true,
 			uid: usuario.id,
             name: usuario.name,
-            token
 		});
 
 
@@ -89,23 +81,87 @@ const loginUsuario = async(req, res = response) => {
 
 };
 
-const revalidarToken = async(req, res = response) => {
+const crearAdmin = async (req, res = response) => {
 
-    const { uid, name } = req;
+    const { username, password } = req.body;
 
-    // Generar JWT
-    const token = await generarJWT(uid, name);
+    try {
+        let admin = await Admin.findOne({ username });
 
-    res.json({
-        ok: true,
-        token,
-        uid,
-        name
-    })
+        if (admin) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Ya existe un administrador con ese username'
+            })
+        }
+
+        admin = new Admin(req.body);
+
+        // Encriptar contrasenia
+        const salt = bcrypt.genSaltSync();
+        admin.password = bcrypt.hashSync(password, salt);
+
+        await admin.save();
+
+        res.status(201).json({
+            ok: true,
+            uid: admin.id,
+            name: admin.name
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Ha ocurrido un error, favor comunicarse con el programador'
+        })
+    }
+
+};
+
+const loginAdmin = async(req, res = response) => {
+
+    const { username, password } = req.body;
+
+    try {
+
+		const admin = await Admin.findOne({ username });
+
+        if (!admin) { 
+            return res.status(400).json({
+                ok: false,
+                msg: 'El administrador no existe con ese username'
+            });
+        }
+
+		// Confirmar los passwords
+		const validPassword = bcrypt.compareSync( password, admin.password);
+
+		if (!validPassword){
+			return res.status(400).json({
+				ok: false,
+				msg: 'Password incorrecto'
+			})
+		}
+
+		res.json({
+			ok: true,
+			uid: admin.id,
+            name: admin.name,
+		});
+
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Por favor comunicarse con el programador'
+        })
+    }
+
 };
 
 module.exports = {
     crearUsuario,
     loginUsuario,
-    revalidarToken
+    crearAdmin,
+    loginAdmin
 }
