@@ -3,26 +3,42 @@ const Club = require('../models/Club');
 
 const crearClub = async (req, res = response) => {
 
-    const { name } = req.body;
+    const clubArray = req.body;
+
+    const repeatedClubs = [];
 
     try {
-        let club = await Club.findOne({ name });
 
-        if (club) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Ya existe un club con ese nombre'
-            })
+        for(let clubElement of clubArray){
+            let name = clubElement.name;
+
+            let club = await Club.findOne({ name }, 'name category');
+
+            if (club) {
+                repeatedClubs.push(club);
+            }
+ 
         }
 
-        club = new Club(req.body);
+        if(repeatedClubs.length == clubArray.length){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Todos los clubes son repetidos'
+            });
+        }
 
-        await club.save();
-
+        const filtered = clubArray.filter(el => {
+            return !repeatedClubs.find(element => {
+                return element.name === el.name;
+            });
+        });
+        
+        await Club.insertMany(filtered);
+        
         res.status(201).json({
             ok: true,
-            uid: club.id,
-            name: club.name
+            clubesInsertados: filtered,
+            clubesRepetidos: repeatedClubs
         });
 
     } catch (error) {
@@ -76,8 +92,47 @@ const marcarInteres = async(req, res = response) => {
 
 };
 
+const getClubesSugeridosPorUsuario = async(req, res = response) => {
+    const userName = req.params.user;
+
+    try {
+        const clubes = await Club.find({suggestedBy: userName}, 'name category suggestedBy').exec();
+
+        res.status(200).json({
+            ok: true,
+            clubes
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Ha ocurrido un error, favor comunicarse con el programador'
+        });
+    }
+}
+
+const getClubesInteresados = async(req, res = response) => {
+    const userName = req.params.user;
+
+    try {
+        const clubes = await Club.find({interested: {$in: userName}}, 'name category suggestedBy').exec();
+
+        res.status(200).json({
+            ok: true,
+            clubes
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Ha ocurrido un error, favor comunicarse con el programador'
+        });
+    }
+}
 
 module.exports = {
     crearClub,
-    marcarInteres
+    marcarInteres,
+    getClubesSugeridosPorUsuario,
+    getClubesInteresados
 }

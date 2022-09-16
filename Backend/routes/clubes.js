@@ -3,20 +3,21 @@
     host + api/clubes
 */
 const { Router } = require('express');
-const { check } = require('express-validator');
+const { check, body } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
 
-const { crearClub, marcarInteres } = require('../controllers/clubes');
+const { crearClub, marcarInteres, getClubesSugeridosPorUsuario, getClubesInteresados } = require('../controllers/clubes');
 
 router.post(
     '/new', 
     [ //Middlewares
-        check('name', 'El nombre es obligatorio').not().isEmpty(),
-        check('category', 'El category es obligatorio').not().isEmpty(),
-        check('suggestedBy', 'El suggestedBy es obligatorio').not().isEmpty(),
-        check('interested', 'El interested es obligatorio').isArray(),
+        body().isArray(),
+        body('*.name', 'El nombre es obligatorio').not().isEmpty(),
+        body('*.category', 'El category es obligatorio').not().isEmpty(),
+        body('*.suggestedBy', 'El suggestedBy es obligatorio').not().isEmpty(),
+        body('*.interested', 'El interested es obligatorio').isArray(),
         validarCampos
     ], 
     crearClub
@@ -31,6 +32,10 @@ router.post(
     ],
     marcarInteres 
 );
+
+router.get('/suggested/:user', getClubesSugeridosPorUsuario);
+
+router.get('/interested/:user', getClubesInteresados);
 
 
 module.exports = router;
