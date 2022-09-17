@@ -28,7 +28,8 @@ const crearUsuario = async (req, res = response) => {
         res.status(201).json({
             ok: true,
             uid: usuario.id,
-            name: usuario.name
+            name: usuario.name,
+            username: usuario.username
         });
 
     } catch (error) {
@@ -69,6 +70,7 @@ const loginUsuario = async(req, res = response) => {
 			ok: true,
 			uid: usuario.id,
             name: usuario.name,
+            username: usuario.username
 		});
 
 
@@ -106,7 +108,8 @@ const crearAdmin = async (req, res = response) => {
         res.status(201).json({
             ok: true,
             uid: admin.id,
-            name: admin.name
+            name: admin.name,
+            username: admin.username
         });
 
     } catch (error) {
@@ -147,6 +150,7 @@ const loginAdmin = async(req, res = response) => {
 			ok: true,
 			uid: admin.id,
             name: admin.name,
+            username: admin.username
 		});
 
 
