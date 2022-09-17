@@ -93,10 +93,10 @@ const marcarInteres = async(req, res = response) => {
 };
 
 const getClubesSugeridosPorUsuario = async(req, res = response) => {
-    const userName = req.params.user;
+    const userId = req.params.user;
 
     try {
-        const clubes = await Club.find({suggestedBy: userName}, 'name category suggestedBy').exec();
+        const clubes = await Club.find({suggestedBy: userId}, 'name category suggestedBy').exec();
 
         res.status(200).json({
             ok: true,
@@ -116,6 +116,25 @@ const getClubesInteresados = async(req, res = response) => {
 
     try {
         const clubes = await Club.find({interested: {$in: userName}}, 'name category suggestedBy').exec();
+
+        res.status(200).json({
+            ok: true,
+            clubes
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Ha ocurrido un error, favor comunicarse con el programador'
+        });
+    }
+}
+
+const getClubesNoInteresados = async(req, res = response) => {
+    const userName = req.params.user;
+
+    try {
+        const clubes = await Club.find({interested: {$not: {$in: userName}}}, 'name category suggestedBy').exec();
 
         res.status(200).json({
             ok: true,
@@ -221,5 +240,6 @@ module.exports = {
     getClubesPorCategoria,
     getTop5ClubesSugeridos,
     getBottom3ClubesSugeridos,
-    getTop3EstudiantesMasSugerencias
+    getTop3EstudiantesMasSugerencias,
+    getClubesNoInteresados
 }
