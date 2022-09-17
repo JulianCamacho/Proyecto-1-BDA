@@ -8,7 +8,7 @@ const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
 
-const { crearClub, marcarInteres, getClubesSugeridosPorUsuario, getClubesInteresados } = require('../controllers/clubes');
+const { crearClub, marcarInteres, getClubesSugeridosPorUsuario, getClubesInteresados, getClubesPorCategoria, getTop5ClubesSugeridos, getBottom3ClubesSugeridos, getTop3EstudiantesMasSugerencias } = require('../controllers/clubes');
 
 router.post(
     '/new', 
@@ -37,5 +37,12 @@ router.get('/suggested/:user', getClubesSugeridosPorUsuario);
 
 router.get('/interested/:user', getClubesInteresados);
 
+router.get('/byCategory', getClubesPorCategoria);
+
+router.get('/top5', getTop5ClubesSugeridos);
+
+router.get('/bottom3', getBottom3ClubesSugeridos);
+
+router.get('/students/top3', getTop3EstudiantesMasSugerencias);
 
 module.exports = router;

@@ -11,9 +11,10 @@ const ClubSchema = Schema({
         required: true,
     },
     suggestedBy: {
-        type: String,
-        required: true,
-    },
+		type: Schema.Types.ObjectId,
+		ref: 'Usuario',
+		required: true
+	},
     interested: {
         type: [String],
         required: true
