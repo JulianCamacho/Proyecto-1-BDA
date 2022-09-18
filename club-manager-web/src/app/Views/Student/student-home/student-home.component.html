@@ -1,0 +1,108 @@
+<div class="container-home">
+    <div class="row align-items-center justify-content-center">
+    <p>
+        <mat-toolbar class="toolbar" color="primary">
+            <button mat-icon-button class="example-icon">
+                <mat-icon>home</mat-icon>
+            </button>
+            <span class="title-toolbar">Club Manager Student</span>
+            <span class="spacer"></span>
+            <button mat-icon-button class="example-icon" (click)="openAddClub(username)">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button class="example-icon" (click)="goStudentLogin()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-toolbar>
+      </p>
+</div>
+<div class="container-fluid">
+    <div class="row row align-items-center justify-content-center">
+        <div class="col-4 text-center">
+            <h5>Clubes que he sugerido</h5>
+        </div>
+        <div class="col-4 text-center">
+            <h5>Clubes que me interesan</h5>
+        </div>
+        <div class="col-4 text-center">
+            <h5>Clubes que no me interesan</h5>
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+        <div class="col-4 section">
+            <table mat-table [dataSource]="dataSourceSuggested" class="mat-elevation-z8">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+            
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef> Categoría </th>
+                  <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumnSuggested" class="header-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnSuggested;" class="content-row"></tr>
+              </table>
+        </div>
+        <div class="col-4 section">
+            <table mat-table [dataSource]="dataSourceInterested" class="mat-elevation-z8">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+            
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef> Categoría </th>
+                  <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumnInterested" class="header-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnInterested;" class="content-row"></tr>
+              </table>  
+        </div>
+        <div class="col-4 section">
+            <table mat-table [dataSource]="dataSourceNotInterested" class="mat-elevation-z8">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+            
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef> Categoría </th>
+                  <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Acción </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button class="favorite-icon search-icon" (click)="openInterestClub(element.name)">
+                        <mat-icon>thumb_up</mat-icon>
+                    </button>
+                    </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumnNotInterested" class="header-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnNotInterested;" class="content-row"></tr>
+              </table>   
+        </div>
+    </div>
+</div>
