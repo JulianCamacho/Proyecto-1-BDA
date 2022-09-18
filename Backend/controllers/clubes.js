@@ -56,7 +56,7 @@ const marcarInteres = async(req, res = response) => {
 
     try {
 
-		const club = await Club.findOne({ clubName });
+		const club = await Club.findOne({ name: clubName });
 
         if (!club) { 
             return res.status(400).json({
@@ -64,7 +64,6 @@ const marcarInteres = async(req, res = response) => {
                 msg: 'No existe un club con ese nombre'
             });
         }
-
         if(club.interested.includes(userName)){
             return res.status(400).json({
                 ok: false,
