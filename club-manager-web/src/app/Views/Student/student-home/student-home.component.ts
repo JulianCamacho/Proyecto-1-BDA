@@ -7,23 +7,6 @@ import { RequestService } from 'src/app/Services/request.service';
 import { AddNewClubComponent } from './add-new-club/add-new-club.component';
 import { InterestedInClubComponent } from './interested-in-club/interested-in-club.component';
 
-const ED2: Club[] = [
-  { name: "Boxing", category: "Sports", suggestedBy: "isdisd"},
-  {name: "Arching", category: "Sports", suggestedBy: "isdisd"},
-  {name: "sdsddf", category: "Sports", suggestedBy: "isdisd"},
-  {name: "Boxinefeg", category: "Sports", suggestedBy: "isdisd"},
-  {name: "efefefe", category: "Sports", suggestedBy: "isdisd"},
-  {name: "efefef", category: "Sports", suggestedBy: "isdisd"},
-  {name: "efefef", category: "Sports", suggestedBy: "isdisd"},
-  {name: "efefef", category: "Sports", suggestedBy: "isdisd"},
-  {name: "efefef", category: "Sports", suggestedBy: "isdisd"},
-  {name: "efefef", category: "Sports", suggestedBy: "isdisd"},
-];
-
-const ED3: Club[] = [
-  { name: "Boxing", category: "Sports", suggestedBy: "isdisd"},
-  {name: "Arching", category: "Sports", suggestedBy: "isdisd"},
-];
 
 @Component({
   selector: 'app-student-home',
@@ -39,9 +22,11 @@ export class StudentHomeComponent implements OnInit {
     private request: RequestService
   ) { }
 
+  //user global variables
   username: any = "";
   userId: any = "";
 
+  // Mat Table settings
   displayedColumnSuggested: string[] = ['name', 'category'];
   dataSourceSuggested: Club[] = [];
  
@@ -55,11 +40,13 @@ export class StudentHomeComponent implements OnInit {
  
 
   ngOnInit(): void {
+    // When this component is opened, the user variables are fetched
     this.userId = localStorage.getItem('userId');
     this.username = localStorage.getItem('userName');
     this.updateRemoteData();
   }
 
+  // Open a Dialog Component to confirm if the user wants to interest on a club
   openInterestClub(club_name: string): void {
     const dialogRef = this.dialog.open(InterestedInClubComponent, {
       width: '300px',
@@ -73,6 +60,7 @@ export class StudentHomeComponent implements OnInit {
     });
   }
 
+  // Open a Dialog Component to suggest new clubes
   openAddClub(username: string): void {
     const dialogRef = this.dialog.open(AddNewClubComponent, {
       width: '400px',
@@ -81,7 +69,23 @@ export class StudentHomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != false){
-        console.log(result);
+        if(this.checkSuggestedClubList(result) == false){
+          this.notifications.showNotification(
+            'Se deben proveer todos los datos de los clubes sugeridos', 3
+          );
+        }
+        let json_array = [];
+        for(let sc of result){
+          json_array.push(
+            {
+              "name": sc['name'],
+              "category": sc['category'],
+              "suggestedBy": this.userId,
+              "interested": []
+            }
+          )
+        }
+        this.suggestNewClub(json_array);
       }
     });
   }
@@ -107,7 +111,6 @@ export class StudentHomeComponent implements OnInit {
         suggestedBy: club['suggestedBy']
       })
     }
-    console.log(this.dataSourceSuggested);
   }
 
   // Fetch the interested clubes
@@ -124,8 +127,6 @@ export class StudentHomeComponent implements OnInit {
         suggestedBy: club['suggestedBy']
       })
     }
-
-    console.log(this.dataSourceInterested);
   }
 
   // Fetch not interested clubes
@@ -142,8 +143,6 @@ export class StudentHomeComponent implements OnInit {
         suggestedBy: club['suggestedBy']
       })
     }
-
-    console.log(this.dataSourceNotInterested);
   }
 
   // Post interest in club
@@ -167,9 +166,8 @@ export class StudentHomeComponent implements OnInit {
   }
 
   // suggest a new club
-  async suggestNewClub(name: string, category: string){
-    const response: any = await this.request.postNewClub(
-      name, category, this.userId);
+  async suggestNewClub(json_array: any){
+    const response: any = await this.request.postNewClub(json_array);
 
     let status = response['ok'];
     let response_message = response['msg'];
@@ -183,7 +181,7 @@ export class StudentHomeComponent implements OnInit {
         
       this.updateRemoteData();
       this.notifications.showNotification(
-        'Se ha sugerido el club de ' + name, 4);
+        'Se han sugerido los clubes correctamente', 3);
   }
 
   // Update all fetching arrays
@@ -191,6 +189,16 @@ export class StudentHomeComponent implements OnInit {
     this.fetchSuggestedClubes();
     this.fetchInterestedClubes();
     this.fetchNotInterestedClubes();
+  }
+
+  // Loop through an array and check if the item's fields have some data
+  checkSuggestedClubList(suggestedClubs: any[]){
+    for(let sc of suggestedClubs){
+      if(sc['name'] == "" || sc['category'] == ""){
+        return false;
+      }
+    }
+    return true;
   }
 
 }

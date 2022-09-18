@@ -13,7 +13,6 @@ export class RequestService {
 
   // API route
   private api_url: string = 'http://localhost:4000/api/';
-  headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
 
   // User login request
   async postUserLogin(username: string, password: string){
@@ -44,15 +43,12 @@ export class RequestService {
   }
 
   // POST New club creation
-  async postNewClub(name: string, category: string, suggestedBy: string){
-    let json_body = {
-      "name": name,
-      "category": category,
-      "suggestedBy": suggestedBy,
-      "interested": []
-    }
+  async postNewClub(json_body: any){
     return await lastValueFrom(this.http.post<string>(this.api_url + 'clubes/new',
-     json_body));
+     json_body))
+     .catch((e) => {
+      return e['error'];
+  });    
   }
 
   // POST Interest on certain club

@@ -1,21 +1,26 @@
 /* CSS Web Landscape ******************************************************* */
 
-.container-home .spacer {
+.spacer {
     flex: 1 1 auto;
   }
 
-.container-home .title-toolbar{
+.title-toolbar{
     font-size: 35px;
     margin-left: 20px;;
 }
 
-.container-home .toolbar input{
+.user-title-toolbar{
+    font-size: 20px;
+    margin-left: 100px;;
+}
+
+.toolbar input{
     margin-left: 60px;
     width: 20%;
     text-align: center;
 }
 
-.container-home .toolbar mat-icon{
+.toolbar mat-icon{
     font-size: 25px;
     margin-left: 10px;
     margin-right: 50px;
@@ -29,7 +34,6 @@
 }
 
 
-
 /* CSS Aplicable para todas las dimensiones  ******************************************************* */
 table {
     width: 100%;
@@ -38,6 +42,3 @@ table {
 .header-row {
     font-weight: bold;
 }
-
-
-

@@ -69,4 +69,9 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/student-home']);
   }
 
+  // Go to the Admin's Login component by router
+  goAdminLogin(){
+    this.router.navigate(['/admin-login']);
+  }
+
 }

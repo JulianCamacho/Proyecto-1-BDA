@@ -14,6 +14,9 @@ import { StudentHomeComponent } from './Views/Student/student-home/student-home.
 import { AddNewClubComponent } from './Views/Student/student-home/add-new-club/add-new-club.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RequestService } from './Services/request.service';
+import { AdminLoginComponent } from './Views/Admin/admin-login/admin-login.component';
+import { AdminRegistryComponent } from './Views/Admin/admin-registry/admin-registry.component';
+import { AdminHomeComponent } from './Views/Admin/admin-home/admin-home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +24,10 @@ import { RequestService } from './Services/request.service';
     RegistryComponent,
     StudentHomeComponent,
     InterestedInClubComponent,
-    AddNewClubComponent
+    AddNewClubComponent,
+    AdminLoginComponent,
+    AdminRegistryComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,

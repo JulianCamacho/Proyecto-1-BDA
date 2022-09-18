@@ -6,9 +6,10 @@
                 <mat-icon>home</mat-icon>
             </button>
             <span class="title-toolbar">Club Manager Student</span>
+            <span class="user-title-toolbar">usuario: {{username}}</span>
             <span class="spacer"></span>
             <button mat-icon-button class="example-icon" (click)="openAddClub(username)">
-                <mat-icon>add</mat-icon>
+                <mat-icon>add_to_queue</mat-icon>
             </button>
             <button mat-icon-button class="example-icon" (click)="goStudentLogin()">
                 <mat-icon>cancel</mat-icon>
@@ -17,7 +18,7 @@
       </p>
 </div>
 <div class="container-fluid">
-    <div class="row row align-items-center justify-content-center">
+    <div class="row align-items-center justify-content-center home-header">
         <div class="col-4 text-center">
             <h5>Clubes que he sugerido</h5>
         </div>
