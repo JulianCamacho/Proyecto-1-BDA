@@ -4,6 +4,8 @@ import { AdminLoginComponent } from './Views/Admin/admin-login/admin-login.compo
 import { LoginComponent } from './Views/Student/login/login.component';
 import { RegistryComponent } from './Views/Student/registry/registry.component';
 import { StudentHomeComponent } from './Views/Student/student-home/student-home.component';
+import { AdminRegistryComponent } from './Views/Admin/admin-registry/admin-registry.component';
+import { AdminHomeComponent } from './Views/Admin/admin-home/admin-home.component';
 
 const routes: Routes = [
   {
@@ -23,8 +25,16 @@ const routes: Routes = [
     component: RegistryComponent
   },
   {
+    path: 'admin-registry',
+    component: AdminRegistryComponent
+  },
+  {
     path: 'student-home',
     component: StudentHomeComponent
+  },
+  {
+    path: 'admin-home',
+    component: AdminHomeComponent
   }
 ];
 

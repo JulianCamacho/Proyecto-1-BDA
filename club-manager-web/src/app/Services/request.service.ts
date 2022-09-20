@@ -26,6 +26,19 @@ export class RequestService {
       return e['error'];
   });
   }
+  
+  // User admin request
+  async postAdminLogin(username: string, password: string){
+    let json_body = {
+      "username": username,
+      "password": password
+    }
+    return await lastValueFrom(this.http.post<string>(this.api_url + 'auth/admin',
+     json_body))
+     .catch((e) => {
+      return e['error'];
+  });
+  }
 
   // POST User registry
   async postUserRegistry(name: string, username: string, password: string, section: string){
@@ -36,6 +49,20 @@ export class RequestService {
       "section": section
     }
     return await lastValueFrom(this.http.post<string>(this.api_url + 'auth/newUser',
+     json_body))
+     .catch((e) => {
+      return e['error'];
+  });
+  }
+
+   // POST Admin registry
+   async postAdminRegistry(name: string, username: string, password: string){
+    let json_body = {
+      "name": name,
+      "username": username,
+      "password": password
+    }
+    return await lastValueFrom(this.http.post<string>(this.api_url + 'auth/newAdmin',
      json_body))
      .catch((e) => {
       return e['error'];
@@ -83,5 +110,20 @@ export class RequestService {
   // GET clubes by category
   async getClubesByCategory(){
     return await lastValueFrom(this.http.get<any[]>(this.api_url + 'clubes/byCategory/'));
+  }
+
+  // GET top 3 students
+  async getClubsOfTop3Students(){
+    return await lastValueFrom(this.http.get<any[]>(this.api_url + 'clubes/students/top3'));
+  }
+
+   // GET top 5 clubs
+   async getTop5Clubs(){
+    return await lastValueFrom(this.http.get<any[]>(this.api_url + 'clubes/top5'));
+  }
+
+   // GET bottom 3 clubs
+   async getBottom3Clubs(){
+    return await lastValueFrom(this.http.get<any[]>(this.api_url + 'clubes/bottom3'));
   }
 }
