@@ -8,6 +8,7 @@
             <span class="title-toolbar">Club Manager Admin</span>
             <span class="user-title-toolbar">Usuario: {{username}}</span>
             <span class="spacer"></span>
+
             <button mat-icon-button class="example-icon" (click)="goStudentLogin()">
                 <mat-icon>cancel</mat-icon>
             </button>
@@ -16,13 +17,13 @@
     </div>
 <div class="container-fluid">
     <div class="row align-items-center justify-content-around home-header">
-        <div class="col-6 text-center" id="divCategoryChart">
-            <h5>Cantidad de clubes sugeridos según categoría</h5>
-            <canvas id="categories"></canvas>
-        </div>
         <div class="col-6 text-center" id="divStudentChart">
             <h5>Cantidad de clubes de los 3 estudiantes con más sugerencias</h5>
             <canvas id="clubsTop3Students"></canvas>
+        </div>
+        <div class="col-6 text-center" id="divCategoryChart">
+            <h5>Cantidad de clubes sugeridos según categoría</h5>
+            <canvas id="categories"></canvas>
         </div>
     </div>
     <div class="row align-items-center justify-content-around home-header">

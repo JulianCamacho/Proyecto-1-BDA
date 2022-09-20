@@ -26,28 +26,25 @@ export class AdminHomeComponent implements OnInit {
   userId: any = "";
 
   //Category chart data 
-  categories: any[] = ["Arte", "Deportes"];
-  count: any[] = [10, 20];
+  categories: any[] = [];
+  count: any[] = [];
 
   //Top students chart data
-  students: any[] = ["Juan", "Pedro"];
-  numberOfClubs: any[] = [5, 23];
+  students: any[] = [];
+  numberOfClubs: any[] = [];
 
   //Tables data
   displayedColumns: string[] = ['position', 'name', 'category', 'count'];
-  top5clubs: any[] = [{position:1, name:'club1', category:'art', interestedCount:'2'},
-                      {position:1, name:'club1', category:'art', interestedCount:'2'},
-                      {position:1, name:'club1', category:'art', interestedCount:'2'},
-                      {position:1, name:'club1', category:'art', interestedCount:'2'}
-                    ]
-  bottom3clubs: any[] = [{position:1, name:'club1', category:'art', interestedCount:'2'},
-  {position:1, name:'club1', category:'art', interestedCount:'2'},
-  {position:1, name:'club1', category:'art', interestedCount:'2'},
-  {position:1, name:'club1', category:'art', interestedCount:'2'}
-]
+  top5clubs: any[] =  []
+  bottom3clubs: any[] = []
 
 
   ngOnInit(): void {
+    this.userId = localStorage.getItem('userId');
+    this.username = localStorage.getItem('userName');
+   
+    this.updateRemoteData();  
+
     const categoryChart = new Chart("categories", {
       type: 'polarArea',
       data: {
@@ -111,19 +108,48 @@ export class AdminHomeComponent implements OnInit {
           }
         }
       }
-    });
-    
-    this.getByCategory();
-    this.getTop3Students();
-    this.getClubsTop5();
-    this.getClubsBottom3();
+    }); 
+
+    this.addDataCategoryChart(categoryChart, this.categories, this.count)
+    this.addDataTop3Chart(clubTop3Chart, this.students, this.numberOfClubs)
+
   }
 
+  generateCharts(){
+    
+
+  }
+  addDataCategoryChart(chart:any, labels:any, data:any) {
+    this.removeData(chart);
+    this.categories.shift();
+    chart.data.labels[0] = labels;
+    chart.data.datasets[0].data = data;
+    chart.update('none');
+  }
+  
+  addDataTop3Chart(chart:any, labels:any, data:any) {
+    this.removeData(chart);
+    this.categories.shift();
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.update('active');
+  }
+
+  removeData(chart:any) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset:any) => {
+        dataset.data.pop();
+    });
+    chart.update();
+  }
 
   // Get clubs by category
   async getByCategory(){
     const response: any = await this.request.getClubesByCategory();
 
+    //this.categories=[]
+    //this.count = []
+    
     for(var category of response['result']){
       this.categories.push(category['category']);
       this.count.push(category['count']);
@@ -134,6 +160,9 @@ export class AdminHomeComponent implements OnInit {
   async getTop3Students(){
     const response: any = await this.request.getClubsOfTop3Students();
 
+    //this.numberOfClubs=[];
+    //this.students=[];
+    
     for(var student of response['result']){
       this.numberOfClubs.push(student['suggestedClubs']);
       var suggestedBy = student['suggestedBy'];
@@ -145,12 +174,16 @@ export class AdminHomeComponent implements OnInit {
   async getClubsTop5(){
     const response: any = await this.request.getTop5Clubs();
 
+    this.top5clubs = [];
+    var i = 1;
     for(var club of response['result']){
       this.top5clubs.push({
+        position:i,
         name: club['name'],
         category: club['category'],
         interestedCount: club['interestedCount']
       })
+      i++;
     }
   }
 
@@ -158,13 +191,26 @@ export class AdminHomeComponent implements OnInit {
    async getClubsBottom3(){
     const response: any = await this.request.getBottom3Clubs();
 
+    this.bottom3clubs = [];
+
+    var i = 1;
     for(var club of response['result']){
       this.bottom3clubs.push({
+        position:i,
         name: club['name'],
         category: club['category'],
         interestedCount: club['interestedCount']
       })
+      i++;
     }
+  }
+
+  // Update all fetching arrays
+  updateRemoteData(){
+    this.getByCategory();
+    this.getTop3Students();
+    this.getClubsTop5();
+    this.getClubsBottom3();
   }
 
 
@@ -172,5 +218,6 @@ export class AdminHomeComponent implements OnInit {
   goStudentLogin() {
     this.router.navigate(['/admin-login']);
   }
+   
 
 }
