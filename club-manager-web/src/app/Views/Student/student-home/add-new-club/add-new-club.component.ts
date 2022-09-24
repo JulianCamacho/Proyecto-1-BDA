@@ -17,15 +17,12 @@ export class AddNewClubComponent implements OnInit {
     private notification: NotificationsService) {}
 
   // Array used to store the fetched club's categories
-  categories: any[] = [];
+  categories: any[] = ['artes', 'deportes', 'idiomas', 'otros'];
 
   // Array used to create or delete NewClubForms
   dynamicFormStructure: any[] = [];
 
   ngOnInit(): void {
-    // When opened, club's categories are fetched
-    this.fetchClubCategories();
-
     // Show a message to the user
     this.notification.showNotification(
       'Agregue los forms necesarios antes de ingresar los datos', 2
