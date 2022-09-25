@@ -177,7 +177,7 @@ const getTop5ClubesSugeridos = async(req, res) => {
             $project: {
                 name: '$name',
                 category: 1,
-                interestedCount: {$add: [{$size: "$interested"}, 1]} 
+                interestedCount: {$size: "$interested"}
             }
         }
     ]).sort({interestedCount: -1}).limit(5);
