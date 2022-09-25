@@ -16,23 +16,22 @@ export class AdminRegistryComponent implements OnInit {
     private notifications: NotificationsService) { }
 
   // NgModel variables used in the form
-  name: string = "";
-  lastname1: string = "";
-  lastname2: string = "";
+  nameA: string = "";
+  lastname1A: string = "";
+  lastname2A: string = "";
   username: string = "";
   password: string = "";
   confirm_password: string = "";
 
-  fullname: string = this.name + ' ' + this.lastname1 + ' ' + this.lastname2;
 
   ngOnInit(): void {
   }
 
   // Reset all the form fields in case of any error occurs
   resetFields(){
-    this.name = "";
-    this.lastname1 = "";
-    this.lastname2 = "";
+    this.nameA = "";
+    this.lastname1A = "";
+    this.lastname2A = "";
     this.username = "";
     this.password = "";
     this.confirm_password = "";
@@ -48,9 +47,10 @@ export class AdminRegistryComponent implements OnInit {
       return;
     
     }
+  
 
     const response: any = await this.request.postAdminRegistry(
-      this.fullname,
+      this.nameA + ' ' + this.lastname1A + ' ' + this.lastname2A,
       this.username,
       this.password);
     

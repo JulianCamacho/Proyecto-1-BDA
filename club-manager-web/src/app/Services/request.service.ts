@@ -62,11 +62,13 @@ export class RequestService {
       "username": username,
       "password": password
     }
+
     return await lastValueFrom(this.http.post<string>(this.api_url + 'auth/newAdmin',
      json_body))
      .catch((e) => {
       return e['error'];
   });
+
   }
 
   // POST New club creation
