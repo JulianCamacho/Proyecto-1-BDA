@@ -194,7 +194,7 @@ const getBottom3ClubesSugeridos = async(req, res = response) => {
             $project: {
                 name: '$name',
                 category: 1,
-                interestedCount: {$add: [{$size: "$interested"}, 1]} 
+                interestedCount: {$size: "$interested"}
             }
         }
     ]).sort({interestedCount: 1}).limit(3);
