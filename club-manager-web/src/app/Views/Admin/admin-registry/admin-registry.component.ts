@@ -48,9 +48,10 @@ export class AdminRegistryComponent implements OnInit {
     
     }
   
+    var fullname = this.nameA + ' ' + this.lastname1A + ' ' + this.lastname2A;
 
     const response: any = await this.request.postAdminRegistry(
-      this.nameA + ' ' + this.lastname1A + ' ' + this.lastname2A,
+      fullname,
       this.username,
       this.password);
     

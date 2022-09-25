@@ -24,7 +24,6 @@ export class RegistryComponent implements OnInit {
   password: string = "";
   confirm_password: string = "";
 
-  fullname: string = this.name + ' ' + this.lastname1 + ' ' + this.lastname2;
 
   ngOnInit(): void {
   }
@@ -50,9 +49,10 @@ export class RegistryComponent implements OnInit {
       return;
     
     }
+    let fullname: string = this.name + ' ' + this.lastname1 + ' ' + this.lastname2;
 
     const response: any = await this.request.postUserRegistry(
-      this.fullname,
+      fullname,
       this.username,
       this.password,
       this.section);
