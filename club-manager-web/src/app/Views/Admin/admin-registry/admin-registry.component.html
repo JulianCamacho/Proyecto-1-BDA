@@ -1,0 +1,73 @@
+<div class="container cart">
+
+    <div class="row justify-content-start align-items-start cabecera">
+        <div class="col-4">
+            <div class="example-button-container">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="goLogin()">arrow_back</mat-icon>            </div>
+            </div>
+        <div class="col-4">
+            <h2>Registro</h2>
+        </div>
+    </div>
+    <div class="row">
+        <form #registryFormAdmin="ngForm" novalidate>
+            <!-- Full Name Row -->
+            <div class="row">
+                <div class="col-4">
+                    <label>Nombre</label>
+                    <div class="form-group">
+                        <input type="string" class="form-control"
+                        required name="nam" [(ngModel)]="nameA">
+                    </div>
+                </div>
+                <div class="col">
+                    <label>Primer apellido</label>
+                    <div class="form-group">
+                        <input type="string" class="form-control"
+                        required name="lastnam1"
+                         [(ngModel)]="lastname1A">
+                    </div>
+                </div>
+                <div class="col">
+                    <label>Segundo apellido (Opcional)</label>
+                    <div class="form-group">
+                        <input type="string" class="form-control"
+                         name="lastnam2" [(ngModel)]="lastname2A">
+                    </div>
+                </div>
+            </div>
+            <!-- Username Row -->
+            <div class="row">
+                <div class="col-4">
+                    <label>Nombre de usuario</label>
+                    <div class="form-group">
+                        <input type="string" class="form-control"
+                        required  name="usern1" [(ngModel)]="username">
+                    </div>              
+                </div>
+            </div>
+            <!-- Password and Confirm Password Row -->
+            <div class="row">
+                <div class="col-4">
+                    <label>Contraseña</label>
+                    <div class="form-group">
+                        <input type="password" class="form-control"
+                        required name="pass1" [(ngModel)]="password">
+                    </div>              
+                </div>
+                <div class="col-4">
+                    <label>Confirmar contraseña</label>
+                    <div class="form-group">
+                        <input type="password" class="form-control"
+                        required name="pass2" [(ngModel)]="confirm_password">
+                    </div>              
+                </div>
+            </div>
+            <!-- Registry Button -->
+            <div class="button-container">
+                <button [disabled]="registryFormAdmin.form.invalid" (click)="requestRegistry()"
+                 type="submit" class="btn btn-primary">Registrarse</button>
+            </div>
+        </form>
+    </div>
+</div>

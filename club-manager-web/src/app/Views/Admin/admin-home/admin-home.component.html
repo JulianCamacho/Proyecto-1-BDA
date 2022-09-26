@@ -1,0 +1,94 @@
+<div class="container-home">
+    <div class="row align-items-center justify-content-center">
+    <p>
+        <mat-toolbar class="toolbar" color="primary">
+            <button mat-icon-button class="example-icon">
+                <mat-icon>home</mat-icon>
+            </button>
+            <span class="title-toolbar">Club Manager Admin</span>
+            <span class="user-title-toolbar">Usuario: {{username}}</span>
+            <span class="spacer"></span>
+
+            <button mat-icon-button class="example-icon" (click)="goStudentLogin()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-toolbar>
+      </p>
+    </div>
+<div class="container-fluid">
+    <div class="row align-items-center justify-content-around home-header">
+        <div class="col-6 text-center" id="divStudentChart">
+            <h5>Cantidad de clubes de los 3 estudiantes con más sugerencias</h5>
+            <canvas id="clubsTop3Students"></canvas>
+        </div>
+        <div class="col-6 text-center" id="divCategoryChart">
+            <h5>Cantidad de clubes sugeridos según categoría</h5>
+            <canvas id="categories"></canvas>
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-around home-header">
+        <div class="col-6 text-center">
+            <h5>Top 5 de clubes sugeridos</h5>
+            <table mat-table [dataSource]="top5clubs" class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Nombre del club </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef> Categoría </th>
+                  <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                </ng-container>
+              
+                <!-- Count Column -->
+                <ng-container matColumnDef="count">
+                  <th mat-header-cell *matHeaderCellDef> Cantidad de veces sugerido </th>
+                  <td mat-cell *matCellDef="let element"> {{element.interestedCount}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+        <div class="col-6 text-center">
+            <h5>Bottom 3 de clubes sugeridos</h5>
+            <table mat-table [dataSource]="bottom3clubs" class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                  <th mat-header-cell *matHeaderCellDef> No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> Nombre del club </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                  <th mat-header-cell *matHeaderCellDef> Categoría </th>
+                  <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                </ng-container>
+              
+                <!-- Count Column -->
+                <ng-container matColumnDef="count">
+                  <th mat-header-cell *matHeaderCellDef> Cantidad de veces sugerido </th>
+                  <td mat-cell *matCellDef="let element"> {{element.interestedCount}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,65 @@
+/* CSS Web Landscape ******************************************************* */
+.container-home{
+    overflow:auto;
+}
+.spacer {
+    flex: 1 1 auto;
+  }
+
+.title-toolbar{
+    font-size: 35px;
+    margin-left: 20px;;
+}
+
+.user-title-toolbar{
+    font-size: 20px;
+    margin-left: 100px;;
+}
+
+.toolbar input{
+    margin-left: 60px;
+    width: 20%;
+    text-align: center;
+}
+
+.toolbar mat-icon{
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 50px;
+}
+
+.section{
+    height: 75vh;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    overflow-y: scroll;
+}
+
+/* CSS Aplicable para todas las dimensiones  ******************************************************* */
+
+.header-row {
+    font-weight: bold;
+}
+
+
+#divCategoryChart{
+    display: block;
+    width: 300px;
+    height: 320px;
+}
+
+#divStudentChart{
+    display: block;
+    width: 400px;
+    height: 300px;
+}
+
+table {
+    width: 75%;
+    margin-left: 10%;
+}
+
+#clubsTop3Students{
+    display: block;
+    margin-top: 5%;
+}

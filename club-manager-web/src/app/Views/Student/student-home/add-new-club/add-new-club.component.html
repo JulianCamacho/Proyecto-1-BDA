@@ -1,0 +1,67 @@
+<h1 mat-dialog-title class="text-center">Agregar Nuevo Club</h1>
+<div mat-dialog-content>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="text-center" style="margin-top: 20px;">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon"
+                    (click)="addClubForm()">add</mat-icon> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <form #AddClubForm="ngForm" novalidate>
+                
+                    <div *ngFor="let form of dynamicFormStructure" class="form-container">
+                    <!-- Club Name Row -->
+                    <div class="row">
+                        <div class="col">
+                            <label>Nombre</label>
+                            <div class="form-group">
+                                <input type="string" class="form-control"
+                                required name="club_nam" [(ngModel)]="form['name']">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Category Row -->
+                    <div class="row">
+                        <div class="col">
+                            <label>Categoria</label>
+                            <div class="form-group">
+                                <select class="form-select" name="select" required [(ngModel)]="form['category']">
+                                    <option *ngFor="let c of categories"
+                                    required
+                                    value="{{c}}">
+                                        {{c}}
+                                    </option>
+                                </select>
+                            </div>              
+                        </div>
+                    </div>
+
+                    <div class="col" *ngIf="dynamicFormStructure.indexOf(form) != 0">
+                        <div class="text-center" style="margin-top: 20px;">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon"
+                             (click)="removeClubForm(form)">remove</mat-icon> 
+                        </div>
+                    </div>
+
+                    <div class="col" *ngIf="dynamicFormStructure.indexOf(form) == 0">
+                        <div class="text-center" style="margin-top: 20px;">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon"
+                             disabled>block</mat-icon> 
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Action Buttons -->
+                <div mat-dialog-actions>
+                    <button mat-button [mat-dialog-close]="false">Cancelar</button>
+                    <button mat-button [disabled]="AddClubForm.form.invalid" [mat-dialog-close]="dynamicFormStructure" cdkFocusInitial>Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
